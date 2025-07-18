@@ -94,3 +94,11 @@ if __name__ == "__main__":
         logging.info(f"CSV descargado correctamente. Total de filas: {len(df)}")
     except Exception as e:
         logging.error(f"Ocurrió un error durante la ejecución: {e}")
+
+from datetime import datetime
+
+# Guardar fecha de actualización
+fecha_actual = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+with open("data/raw/ultima_actualizacion.txt", "w", encoding="utf-8") as f:
+    f.write(f"Última actualización: {fecha_actual}\n")
+    f.write("Fuente: https://www.sernatur.cl/dataturismo/big-data-turismo-interno/")
