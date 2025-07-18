@@ -3,3 +3,4 @@ __pycache__
 .learn
 *.pdf
 *.csv
+db/tour_data.db
