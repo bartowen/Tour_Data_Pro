@@ -71,15 +71,19 @@ def descargar_viajes_ocasionales(guardar_en="data/raw/viajes_ocasionales.csv") -
         logging.warning("El DataFrame está vacío después de leer el archivo.")
         raise ValueError("El archivo CSV no contiene datos útiles.")
 
+    # Limpieza: solo columnas numéricas
     for col in df.columns[1:]:
-        df[col] = (
-            df[col]
-            .astype(str)
-            .str.replace(",", ".", regex=False)
-            .astype(float)
-            .round()
-            .astype("Int64")
-        )
+        try:
+            df[col] = (
+                df[col]
+                .astype(str)
+                .str.replace(",", ".", regex=False)
+                .astype(float)
+                .round()
+                .astype("Int64")
+            )
+        except ValueError:
+            logging.warning(f"Columna ignorada (no numérica): {col}")
 
     logging.info("DataFrame limpio y listo.")
     return df
@@ -90,4 +94,3 @@ if __name__ == "__main__":
         logging.info(f"CSV descargado correctamente. Total de filas: {len(df)}")
     except Exception as e:
         logging.error(f"Ocurrió un error durante la ejecución: {e}")
-
