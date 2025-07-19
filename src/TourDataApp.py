@@ -9,24 +9,25 @@ import matplotlib.pyplot as plt
 import folium
 from streamlit_folium import st_folium
 
+st.set_page_config(layout="wide")
 
 # Modelo y Diccionarios
-model = load(open('/opt/render/project/src/models/xgboost_regressor_lr_0_15_mx_dp_8_n_esti_310_42.pkl', 'rb'))
-with open('/opt/render/project/src/data/processed/region_origen_dict.json', 'r', encoding='utf-8') as f:
+model = load(open('C:/Users/felip/repos/Tour_Data_Pro/models/xgboost_regressor_lr_0_15_mx_dp_8_n_esti_310_42.pkl', 'rb'))
+with open('C:/Users/felip/repos/Tour_Data_Pro/data/processed/region_origen_dict.json', 'r', encoding='utf-8') as f:
     region_origen_dict = json.load(f)
-with open('/opt/render/project/src/data/processed/region_destino_dict.json', 'r', encoding='utf-8') as f:
+with open('C:/Users/felip/repos/Tour_Data_Pro/data/processed/region_destino_dict.json', 'r', encoding='utf-8') as f:
     region_destino_dict = json.load(f)
-with open('/opt/render/project/src/data/processed/region_temp_dict.json', 'r', encoding='utf-8') as f:
+with open('C:/Users/felip/repos/Tour_Data_Pro/data/processed/region_temp_dict.json', 'r', encoding='utf-8') as f:
     region_temp_dict = json.load(f)
-with open('/opt/render/project/src/data/processed/region_pib_dict.json', 'r', encoding='utf-8') as f:
+with open('C:/Users/felip/repos/Tour_Data_Pro/data/processed/region_pib_dict.json', 'r', encoding='utf-8') as f:
     region_pib_dict = json.load(f)
-with open('/opt/render/project/src/data/processed/cut_comuna_dict.json', 'r', encoding='utf-8') as f:
+with open('C:/Users/felip/repos/Tour_Data_Pro/data/processed/cut_comuna_dict.json', 'r', encoding='utf-8') as f:
     cut_comuna_dict = json.load(f)
-with open('/opt/render/project/src/data/processed/cut_provincia_dict.json', 'r', encoding='utf-8') as f:
+with open('C:/Users/felip/repos/Tour_Data_Pro/data/processed/cut_provincia_dict.json', 'r', encoding='utf-8') as f:
     cut_provincia_dict = json.load(f)
-with open('/opt/render/project/src/data/processed/cut_region_dict.json', 'r', encoding='utf-8') as f:
+with open('C:/Users/felip/repos/Tour_Data_Pro/data/processed/cut_region_dict.json', 'r', encoding='utf-8') as f:
     cut_region_dict = json.load(f)
-logo='/opt/render/project/src/data/interim/TourData-remove-background.com.png'
+logo='C:/Users/felip/repos/Tour_Data_Pro/data/interim/TourData-remove-background.com.png'
 
 # Funciones
 def obtener_info(region, region_dict, tipo='provincias', provincia=None): 
@@ -119,13 +120,20 @@ with col2:
     
 
 # Mapas
-col1, col2 = st.columns(2,vertical_alignment="center")
-map = folium.Map(location=[-36.523557,-70.206001],zoom_start=5)
-map_regiones = '/opt/render/project/src/data/interim/mapa-01-2.png'
+
+col1, col2 = st.columns([3, 2])  # Mapa ocupa 60%, imagen 40%
+
+map = folium.Map(location=[-36.523557, -70.206001], zoom_start=5)
+map_regiones = 'C:/Users/felip/repos/Tour_Data_Pro/data/interim/mapa-01-2.png'
+
 with col1:
-    st_map =st_folium(map, width=450, height=470)
+    st_folium(map, width=600, height=500)
+
 with col2:
-    st.image(map_regiones, width=450)
+    st.image(map_regiones, width=400)
+
+
+
 
 # Recoleción de Dator Origen 
 st.sidebar.title('Origen de los viajes:')
@@ -240,7 +248,9 @@ for i in range(cantidad_meses_a_predecir):
     pib_destino_base = pib_destino_ajustado
 
 # Mostrar el dataframe final con todas las predicciones
-st.title("Consulta a realizar :")
+
+st.markdown("<div style='margin-top: -40px;'></div>", unsafe_allow_html=True)
+st.markdown("<h3 style='color: navy;'>Consulta a realizar :</h3>", unsafe_allow_html=True)
 st.write(predicciones_df)
 
 
